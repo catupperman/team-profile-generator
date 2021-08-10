@@ -8,96 +8,96 @@ const intern = require("./lib/Intern.js");
 const manager = require("./lib/Manager.js");
 let team = [];
 
-function managerPrompt(){
+function managerPrompt() {
     inquirer.prompt({
         type: "input",
         message: "What is the Manager's Office Number?",
         name: "officeNumber"
-    }).then ((answers) => {
+    }).then((answers) => {
         anotherUser(answers);
     })
 }
 
-function engineerPrompt(){
+function engineerPrompt() {
     inquirer.prompt({
         type: "input",
         message: "What is the Engineer's GitHub Account Name?",
         name: "gitHub"
-    }).then ((answers) => {
+    }).then((answers) => {
         anotherUser(answers);
     })
 }
 
-function internPrompt(){
+function internPrompt() {
     inquirer.prompt({
         type: "input",
         message: "What school did/does the intern attend?",
         name: "school"
-    }).then ((answers) => {
+    }).then((answers) => {
         anotherUser(answers);
     })
-    
+
 }
 
-function anotherUser(){
+function anotherUser() {
     inquirer.prompt({
-       type: "list",
-       message: "Would you like to add another employee?", 
-       name: "anotherEmployee",
-       choices: ["yes", "no" ]
+        type: "list",
+        message: "Would you like to add another employee?",
+        name: "anotherEmployee",
+        choices: ["yes", "no"]
     }
     ).then(answers => {
-        switch(answers.direction) {
+        switch (answers) {
             case "yes":
                 mainMenu();
-            break;
+                break;
             case "no":
                 generateHTML();
-            break
+                break;
         }
     })
 }
 
-
-function mainMenu(){
+function mainMenu() {
     inquirer.prompt([
-    {
-        type: "list",
-        name: "direction",
-        message: "What type of employee would you like to add?",
-        choices: ["manager", "engineer", "intern"],
-    },
-    {
-        type: "input",
-        message: "Name of employee?",
-        name: "name"
-    },
-    {
-        type: "input",
-        message: "ID Number?",
-        name: "idnumber"
-    },
-    {
-        type: "input",
-        message: "Employee's Email?",
-        name: "email"
-    },
+        {
+            type: "list",
+            name: "direction",
+            message: "What type of employee would you like to add?",
+            choices: ["manager", "engineer", "intern"],
+        },
+        {
+            type: "input",
+            message: "Name of employee?",
+            name: "name"
+        },
+        {
+            type: "input",
+            message: "ID Number?",
+            name: "idnumber"
+        },
+        {
+            type: "input",
+            message: "Employee's Email?",
+            name: "email"
+        },
     ]).then(answers => {
-    switch (answers.direction) {
-        case "manager":
-            managerPrompt();
-            break;
-        case "engineer":
-            engineerPrompt();
-            break;
-        case "intern":
-            internPrompt();
-            break;
-        default:
-            break;
-    }
-})}
+        switch (answers.direction) {
+            case "manager":
+                managerPrompt();
+                break;
+            case "engineer":
+                engineerPrompt();
+                break;
+            case "intern":
+                internPrompt();
+                break;
+            default:
+                break;
+        }
+    })
+}
 
 mainMenu();
-//generate an HTML page pulling a function from each js in the library 
+//generate an HTML page pulling a function from each js in the library
 //another function to see if there is any more employees needed to be added
