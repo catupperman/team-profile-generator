@@ -6,7 +6,11 @@ const employee = require("./lib/Employee.js");
 const engineer = require("./lib/Engineer.js");
 const intern = require("./lib/Intern.js");
 const manager = require("./lib/Manager.js");
+const generate = require('./lib/htmlGenerate');
 let team = [];
+
+const OUTPUT_DIR = path.resolve(__dirname, 'output');
+const outputDirection = path.join(OUTPUT_DIR, 'employee.html');
 
 function managerPrompt() {
     inquirer.prompt({
@@ -47,16 +51,14 @@ function anotherUser() {
         choices: ["yes", "no"]
     }
     ).then(answers => {
-        switch (answers) {
-            case "yes":
-                mainMenu();
-                break;
-            case "no":
-                generateHTML();
-                break;
+        if (answers.anotherEmployee === "yes"){
+            mainMenu();
+        } else{
+            generateHTML();
         }
     })
 }
+
 
 function mainMenu() {
     inquirer.prompt([
@@ -99,5 +101,11 @@ function mainMenu() {
 }
 
 mainMenu();
+
+function generateHTML(){
+    fs.writeFile(outputDirection, generate(team), (err)=>{
+        err ? console.log(err): console.log('You made it');
+    })
+}
 //generate an HTML page pulling a function from each js in the library
 //another function to see if there is any more employees needed to be added
