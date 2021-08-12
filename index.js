@@ -1,16 +1,10 @@
 const inquirer = require('inquirer');
 const path = require("path");
-//const jest = require("jest");
 const fs = require("fs");
-const employee = require("./lib/Employee.js");
 const Intern = require("./lib/Intern.js");
-const render = require('./lib/htmlGenerate');
 const Manager = require('./lib/Manager.js');
 const Engineer = require('./lib/Engineer.js');
 let team = [];
-
-//const OUTPUT_DIR = path.resolve(__dirname, 'output');
-//const outputDirection = path.join(OUTPUT_DIR, 'employee.html');
 
 function managerPrompt() {
     inquirer.prompt({
@@ -22,10 +16,20 @@ function managerPrompt() {
         const id = answers.idnumber
         const email = answers.email
         const officeNumber = answers.officeNumber
-        const teamMember = new Manager(name, id, email, officeNumber)
-        team.push(teamMember)
+        const teamManager = new Manager(name, id, email, officeNumber)
+        team.push(generateManagerHTML(teamManager))
+        //add next employees adds the next card to the list of employee cards in the team array
         anotherUser(answers);
     })
+}
+//function for each employee to generate HTML
+function generateManagerHTML(teamManager){
+    let generateManager=`
+    <div class="col">
+        ${teamManager}
+            </div>
+    `
+    return generateManager
 }
 
 function engineerPrompt() {
@@ -38,10 +42,19 @@ function engineerPrompt() {
         const id = answers.idnumber
         const email = answers.email
         const gitHub = answers.gitHub
-        const teamMember = new Engineer(name, id, email, gitHub)
-        team.push(teamMember)
+        const teamEngineer = new Engineer(name, id, email, gitHub)
+        team.push(generateEngineerHTML(teamEngineer))
         anotherUser(answers);
     })
+}
+
+function generateEngineerHTML(teamEngineer){
+    let generateEngineer=`
+    <div class="col">
+        ${teamEngineer}
+            </div>
+    `
+    return generateEngineer
 }
 
 function internPrompt() {
@@ -54,11 +67,20 @@ function internPrompt() {
         const id = answers.idnumber
         const email = answers.email
         const school = answers.school
-        const teamMember = new Intern(name, id, email, school)
-        team.push(teamMember)
+        const teamIntern = new Intern(name, id, email, school)
+        team.push(generateInternHTML(teamIntern))
         anotherUser(answers);
     })
 
+}
+
+function generateInternHTML(teamIntern){
+    let generateIntern=`
+    <div class="col">
+        ${teamIntern}
+            </div>
+    `
+    return generateIntern
 }
 
 function anotherUser() {
@@ -69,9 +91,9 @@ function anotherUser() {
         choices: ["yes", "no"]
     }
     ).then(answers => {
-        if (answers.anotherEmployee === "yes"){
+        if (answers.anotherEmployee === "yes") {
             mainMenu();
-        } else{
+        } else {
             generateHTML();
         }
     })
@@ -118,28 +140,49 @@ function mainMenu() {
     })
 }
 
-function generateHTML(){
+function generateHTML() {
     const htmlArr = []
-    const employeeHTML = `<!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
-        <link rel="stylesheet" href="style.css">
-        <title>Office Memebers</title>
-    </head>
-    <body>
-        <div class="heading-container">
-            <div class="row">
-                <h1 class="display-1 text-center"> The Office </h1>
-            </div>
+    const htmlTop = `
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <title>Office Memebers</title>
+</head>
+<body>
+    <div class="heading-container">
+        <div class="row">
+            <h1 class="display-1 text-center"> The Office </h1>
         </div>
+    </div>
+    <div class="container team-members">
+    <div class="row">
+
+    ${callEmployees(team)}
+
+    `
+    htmlArr.push(htmlTop)
+    function callEmployees(team){
+        for(i=0; i > team.length; i++){
+            return team[i]
+        }
+    }
+
+    const htmlBottom = `
+    </div>
+    </div>
     </body>
     </html>
     `
-    }
+    htmlArr.push(htmlBottom);
 
+    fs.writeFile('team.html', htmlArr.join(""), function (err) {
+        console.error(err);
+    })
+}
 
 mainMenu();
 
