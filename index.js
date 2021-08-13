@@ -12,9 +12,6 @@ function managerPrompt(mainMenuData) {
         message: "What is the Manager's Office Number?",
         name: "officeNumber"
     }).then((answers) => {
-        console.log("managerprompt")
-        console.log(answers)
-        console.log(mainMenuData)
         const name = mainMenuData.name
         const id = mainMenuData.idnumber
         const email = mainMenuData.email
@@ -28,11 +25,13 @@ function managerPrompt(mainMenuData) {
 function generateManagerHTML(teamManager) {
     let generateManager = `
     <div class="col">
-    <h3> Office Manager </h3>
+    <img src="./images/michaelscott.jpg">
+    <h2> Office Manager </h2>
     <ul>
         <li>
-        <h4> Name </h4>
+        <h3>  
         ${teamManager.name}
+        </h3>
         </li>
         <li>
         <h4> Id Number </h4>
@@ -51,6 +50,7 @@ function generateManagerHTML(teamManager) {
     `
     return generateManager
 }
+
 function engineerPrompt(mainMenuData) {
     inquirer.prompt({
         type: "input",
@@ -70,11 +70,13 @@ function engineerPrompt(mainMenuData) {
 function generateEngineerHTML(teamEngineer) {
     let generateEngineer = `
     <div class="col">
-    <h3> Office Manager </h3>
-    <ul>
+    <img src="./images/dwight.jpg">
+     <h2> Office Engineer (Assistant to the Refional Manager) </h2>
+     <ul>
         <li>
-        <h4> Name </h4>
+        <h3> 
         ${teamEngineer.name}
+        </h3>
         </li>
         <li>
         <h4> Id Number </h4>
@@ -114,11 +116,13 @@ function internPrompt(mainMenuData) {
 function generateInternHTML(teamIntern) {
     let generateIntern = `
     <div class="col">
-    <h3> Office Manager </h3>
+    <img src="./images/ryanintern.jpg">
+    <h2> Intern </h2>
     <ul>
         <li> 
-        <h4> Name </h4>
+        <h3> 
         ${teamIntern.name}
+        </h3>
         </li>
         <li> 
         <h4> Id Number </h4>
@@ -187,10 +191,10 @@ function mainMenu() {
                 managerPrompt(answers);
                 break;
             case "engineer":
-                engineerPrompt();
+                engineerPrompt(answers);
                 break;
             case "intern":
-                internPrompt();
+                internPrompt(answers);
                 break;
             default:
                 break;
@@ -211,6 +215,7 @@ function generateHTML() {
     <title>Office Memebers</title>
 </head>
 <body>
+<img src="./images/dundermifflinbanner.png">
     <div class="heading-container">
         <div class="row">
             <h1 class="display-1 text-center"> The Office </h1>
