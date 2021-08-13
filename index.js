@@ -34,16 +34,19 @@ function generateManagerHTML(teamManager) {
         </h3>
         </li>
         <li>
-        <h4> Id Number </h4>
+        <h4> Id Number 
         ${teamManager.id}
+        </h4>
         </li>
         <li>
-        <h4> Email </h4>
+        <h4> Email
         ${teamManager.email}
+        </h4>
         </li>
         <li>
-        <h4> Office Number </h4>
+        <h4> Office Number 
         ${teamManager.officeNumber}
+        </h4>
         </li>
         </ul>
             </div>
@@ -79,16 +82,19 @@ function generateEngineerHTML(teamEngineer) {
         </h3>
         </li>
         <li>
-        <h4> Id Number </h4>
+        <h4> Id Number 
         ${teamEngineer.id}
+        </h4>
         </li>
         <li>
-        <h4> Email </h4>
+        <h4> Email 
         ${teamEngineer.email}
+        </h4>
         </li>
         <li>
-        <h4> GitHub Account Name </h4>
+        <h4> GitHub Account Name 
         ${teamEngineer.gitHub}
+        </h4>
         </li>
         </ul>
             </div>
@@ -125,16 +131,19 @@ function generateInternHTML(teamIntern) {
         </h3>
         </li>
         <li> 
-        <h4> Id Number </h4>
+        <h4> Id Number 
         ${teamIntern.id}
+        </h4>
         </li>
         <li>
-        <h4> Email </h4>
+        <h4> Email 
         ${teamIntern.email}
+        </h4>
         </li>
         <li> 
-        <h4> School </h4>
+        <h4> School 
         ${teamIntern.school}
+        </h4>
         </li>
         </ul>
             </div>

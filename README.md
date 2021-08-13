@@ -11,7 +11,7 @@
 
 ## Description
 > This project was taking node, and creating an HTML to generate a team profile. Three team members Manager, Engineer, and Intern would all need to generate. I made my code as DRY (Don't Repeat Yourself) as possible, meaning this code could easily be manipulated to add additional team members. The code also needed to pass through testing for a file of employees, manager, engineer, and intern.  
-[Video]()
+[Video](https://drive.google.com/file/d/1ZFlSI836BfGt1yMFuuZbSZlBj331_1CH/view)
 
 ## Installation
 > I pulled the [npm](https://www.npmjs.com/) package, aka ```package.json```, entered ```npm install``` , and then used the ```require``` method to narrow down to the [inquirer](https://www.npmjs.com/package/inquirer) package.
