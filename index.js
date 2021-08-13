@@ -6,41 +6,60 @@ const Manager = require('./lib/Manager.js');
 const Engineer = require('./lib/Engineer.js');
 let team = [];
 
-function managerPrompt() {
+function managerPrompt(mainMenuData) {
     inquirer.prompt({
         type: "input",
         message: "What is the Manager's Office Number?",
         name: "officeNumber"
     }).then((answers) => {
-        const name = answers.name
-        const id = answers.idnumber
-        const email = answers.email
+        console.log("managerprompt")
+        console.log(answers)
+        console.log(mainMenuData)
+        const name = mainMenuData.name
+        const id = mainMenuData.idnumber
+        const email = mainMenuData.email
         const officeNumber = answers.officeNumber
         const teamManager = new Manager(name, id, email, officeNumber)
         team.push(generateManagerHTML(teamManager))
-        //add next employees adds the next card to the list of employee cards in the team array
         anotherUser(answers);
     })
 }
-//function for each employee to generate HTML
-function generateManagerHTML(teamManager){
-    let generateManager=`
+
+function generateManagerHTML(teamManager) {
+    let generateManager = `
     <div class="col">
-        ${teamManager}
+    <h3> Office Manager </h3>
+    <ul>
+        <li>
+        <h4> Name </h4>
+        ${teamManager.name}
+        </li>
+        <li>
+        <h4> Id Number </h4>
+        ${teamManager.id}
+        </li>
+        <li>
+        <h4> Email </h4>
+        ${teamManager.email}
+        </li>
+        <li>
+        <h4> Office Number </h4>
+        ${teamManager.officeNumber}
+        </li>
+        </ul>
             </div>
     `
     return generateManager
 }
-
-function engineerPrompt() {
+function engineerPrompt(mainMenuData) {
     inquirer.prompt({
         type: "input",
         message: "What is the Engineer's GitHub Account Name?",
         name: "gitHub"
     }).then((answers) => {
-        const name = answers.name
-        const id = answers.idnumber
-        const email = answers.email
+        const name = mainMenuData.name
+        const id = mainMenuData.idnumber
+        const email = mainMenuData.email
         const gitHub = answers.gitHub
         const teamEngineer = new Engineer(name, id, email, gitHub)
         team.push(generateEngineerHTML(teamEngineer))
@@ -48,24 +67,42 @@ function engineerPrompt() {
     })
 }
 
-function generateEngineerHTML(teamEngineer){
-    let generateEngineer=`
+function generateEngineerHTML(teamEngineer) {
+    let generateEngineer = `
     <div class="col">
-        ${teamEngineer}
+    <h3> Office Manager </h3>
+    <ul>
+        <li>
+        <h4> Name </h4>
+        ${teamEngineer.name}
+        </li>
+        <li>
+        <h4> Id Number </h4>
+        ${teamEngineer.id}
+        </li>
+        <li>
+        <h4> Email </h4>
+        ${teamEngineer.email}
+        </li>
+        <li>
+        <h4> GitHub Account Name </h4>
+        ${teamEngineer.gitHub}
+        </li>
+        </ul>
             </div>
     `
     return generateEngineer
 }
 
-function internPrompt() {
+function internPrompt(mainMenuData) {
     inquirer.prompt({
         type: "input",
         message: "What school did/does the intern attend?",
         name: "school"
     }).then((answers) => {
-        const name = answers.name
-        const id = answers.idnumber
-        const email = answers.email
+        const name = mainMenuData.name
+        const id = mainMenuData.idnumber
+        const email = mainMenuData.email
         const school = answers.school
         const teamIntern = new Intern(name, id, email, school)
         team.push(generateInternHTML(teamIntern))
@@ -74,10 +111,28 @@ function internPrompt() {
 
 }
 
-function generateInternHTML(teamIntern){
-    let generateIntern=`
+function generateInternHTML(teamIntern) {
+    let generateIntern = `
     <div class="col">
-        ${teamIntern}
+    <h3> Office Manager </h3>
+    <ul>
+        <li> 
+        <h4> Name </h4>
+        ${teamIntern.name}
+        </li>
+        <li> 
+        <h4> Id Number </h4>
+        ${teamIntern.id}
+        </li>
+        <li>
+        <h4> Email </h4>
+        ${teamIntern.email}
+        </li>
+        <li> 
+        <h4> School </h4>
+        ${teamIntern.school}
+        </li>
+        </ul>
             </div>
     `
     return generateIntern
@@ -95,6 +150,7 @@ function anotherUser() {
             mainMenu();
         } else {
             generateHTML();
+            console.log(team)
         }
     })
 }
@@ -124,9 +180,11 @@ function mainMenu() {
             name: "email"
         },
     ]).then(answers => {
+        console.log("mainMenu")
+        console.log(answers)
         switch (answers.direction) {
             case "manager":
-                managerPrompt();
+                managerPrompt(answers);
                 break;
             case "engineer":
                 engineerPrompt();
@@ -141,8 +199,8 @@ function mainMenu() {
 }
 
 function generateHTML() {
-    const htmlArr = []
-    const htmlTop = `
+    const finishedTeam = team.join("")
+    const html = `
     <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -161,30 +219,17 @@ function generateHTML() {
     <div class="container team-members">
     <div class="row">
 
-    ${callEmployees(team)}
+    ${finishedTeam}
 
-    `
-    htmlArr.push(htmlTop)
-    function callEmployees(team){
-        for(i=0; i > team.length; i++){
-            return team[i]
-        }
-    }
-
-    const htmlBottom = `
     </div>
     </div>
     </body>
     </html>
     `
-    htmlArr.push(htmlBottom);
-
-    fs.writeFile('team.html', htmlArr.join(""), function (err) {
-        console.error(err);
+    
+    fs.writeFile('team.html', html, function (err) {
+       err ? console.error(err) : console.log('success');
     })
 }
 
 mainMenu();
-
-//generate an HTML page pulling a function from each js in the library
-//another function to see if there is any more employees needed to be added
