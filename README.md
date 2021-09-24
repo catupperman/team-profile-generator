@@ -8,6 +8,7 @@
 * [license](#license)
 * [contact](#contact)
 
+![team-generator](https://user-images.githubusercontent.com/84750356/134738891-3f2c2ca2-3b2a-4238-9af6-6df1ae0703e3.jpeg)
 
 ## Description
 > This project was taking node, and creating an HTML to generate a team profile. Three team members Manager, Engineer, and Intern would all need to generate. I made my code as DRY (Don't Repeat Yourself) as possible, meaning this code could easily be manipulated to add additional team members. The code also needed to pass through testing for a file of employees, manager, engineer, and intern.  
